@@ -1,0 +1,77 @@
+#include <stdio.h>
+#define size 4
+
+int LQueue[size];
+int f = -1, r = -1;
+
+void Enqueue(int x) {
+    if ((r + 1) % size == f) {
+        printf("Overflow\n");
+        return;
+    }
+    if (f == -1) {
+        f = 0;
+        r = 0;
+        LQueue[r] = x;
+    } else {
+        r = (r + 1) % size;
+        LQueue[r] = x;
+    }
+}
+
+void Dequeue() {
+    if (f == -1) {
+        printf("Underflow\n");
+        return;
+    }
+    if (f == r) {
+        f = -1;
+        r = -1;
+    } else {
+        f = (f + 1) % size;
+    }
+}
+
+void Display() {
+    if (f == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+    int i = f;
+    printf("Queue elements: ");
+    while (1) {
+        printf("%d\t", LQueue[i]);
+        if (i == r)
+            break;
+        i = (i + 1) % size;
+    }
+    printf("\n");
+}
+
+int main() {
+    int A, x, k = 1;
+    while (k) {
+        printf("\n1.Add\n2.Remove\n3.Display\n4.Exit\n");
+        printf("Enter Choice: ");
+        scanf("%d", &A);
+        switch (A) {
+            case 1:
+                printf("Enter a Number: ");
+                scanf("%d", &x);
+                Enqueue(x);
+                break;
+            case 2:
+                Dequeue();
+                break;
+            case 3:
+                Display();
+                break;
+            case 4:
+                k = 0;
+                break;
+            default:
+                printf("Enter correct number\n");
+        }
+    }
+    return 0;
+}
